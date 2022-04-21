@@ -19,4 +19,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/projects', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
+Route::any('/{any}', function () {
+    if (auth()->check()) {
+        return view('home');
+    }else {
+        return view('welcome');
+    }
+})->where('any', '.*');

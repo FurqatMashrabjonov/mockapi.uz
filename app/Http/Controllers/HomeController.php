@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\Support\Renderable
     {
-        return view('home');
+        $projects = Project::query()
+            ->where('user_id', auth()->user()->getAuthIdentifier())
+            ->get();
+        return view('home', compact('projects'));
     }
 }
