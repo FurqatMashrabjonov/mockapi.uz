@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ResourceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,14 +24,36 @@ Auth::routes();
 Route::get('/projects', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+//API in WEB
+
+Route::controller(ProjectController::class)
+    ->middleware('auth')->prefix('/projects')
+    ->group(function () {
+        Route::get('/', 'get');
+        Route::get('/{project}', 'getSingle');
+        Route::post('/', 'store');
+        Route::post('/{project}', 'update');
+        Route::delete('/{project}', 'destroy');
+    });
 
 
+Route::controller(ResourceController::class)
+    ->middleware('auth')->prefix('/resources')
+    ->group(function () {
+        Route::get('/', 'get');
+        Route::get('/{resource}', 'getSingle');
+        Route::post('/', 'store');
+        Route::post('/{resource}', 'update');
+        Route::delete('/{resource}', 'destroy');
+    });
 
+
+//----------------------------------------------------------[
 
 Route::any('/{any}', function () {
     if (auth()->check()) {
         return view('home');
-    }else {
+    } else {
         return view('welcome');
     }
 })->where('any', '.*');

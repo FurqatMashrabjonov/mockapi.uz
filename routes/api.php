@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::controller(ApiController::class)->group(function () {
     Route::get(env('ROUTER_MAIN') . "/{id}", 'getSingle');
     Route::post(env('ROUTER_MAIN'), 'store');
     Route::put(env('ROUTER_MAIN') . "/{id}", 'update');
+    Route::post(env('ROUTER_MAIN') . "/{id}", 'update');
     Route::patch(env('ROUTER_MAIN') . "/{id}", 'update');
     Route::delete(env('ROUTER_MAIN') . "/{id}", 'delete');
 });

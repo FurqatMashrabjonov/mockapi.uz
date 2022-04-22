@@ -8,7 +8,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <style>
+        @font-face { font-family: Menlo ;src: url('{{asset('fonts/Menlo-Regular.ttf')}}'); }
+        html *
+        {
+            font-family: Menlo, serif, oboto Mono,monospace !important;
+        }
+    </style>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
