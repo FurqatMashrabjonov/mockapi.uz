@@ -20,13 +20,14 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function index(): \Illuminate\Contracts\Support\Renderable
+    public function index(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     {
-        $projects = Project::query()
-            ->where('user_id', auth()->user()->getAuthIdentifier())
-            ->get();
-        return view('home', compact('projects'));
+//        $projects = Project::query()
+//            ->select('id', 'name', 'prefix')
+//            ->where('user_id', auth()->user()->getAuthIdentifier())
+//            ->get();
+        return redirect('/projects');
     }
 }

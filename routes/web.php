@@ -21,13 +21,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/projects', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/projects', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 //API in WEB
 
 Route::controller(ProjectController::class)
-    ->middleware('auth')->prefix('/projects')
+    ->middleware('auth')->prefix('pro')
     ->group(function () {
         Route::get('/', 'get');
         Route::get('/{project}', 'getSingle');

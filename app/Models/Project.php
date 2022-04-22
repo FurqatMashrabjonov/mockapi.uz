@@ -9,6 +9,16 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'prefix',
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'token';
+    }
+
     public function resources(){
         return $this->hasMany(Resource::class);
     }

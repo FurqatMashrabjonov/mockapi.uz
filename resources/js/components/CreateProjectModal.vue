@@ -1,6 +1,6 @@
 <template>
     <form action="">
-        <div class="modal-card" style="width: auto">
+        <div class="modal-card">
             <header class="modal-card-head" style="background-color: #ffffff; border: none;padding: 10px">
                 <p class="modal-card-title">&nbsp;</p>
                 <button
@@ -12,28 +12,27 @@
                 <b-field label="Loyiha nomini kiriting">
                     <b-input
                         type="text"
+                        v-model="project.name"
                         placeholder="Misol : Todo, Products"
-                        required>
+                        >
                     </b-input>
                 </b-field>
 
-                <b-field label="Password">
+                <b-field label="Prefixni kiriting">
                     <b-input
                         type="text"
-                        placeholder="Loyiha prefiksini kiriting"
-                        required>
+                        v-model="project.prefix"
+                        placeholder="Misol: /products"
+                        >
                     </b-input>
                 </b-field>
-
-                <b-checkbox>Remember me</b-checkbox>
             </section>
             <footer class="modal-card-foot">
                 <b-button
-                    label="Close"
-                    @click="$emit('close')" />
-                <b-button
-                    label="Login"
-                    type="is-primary" />
+                    label="Yaratish"
+                    type="is-primary"
+                    @click="createProject"
+                />
             </footer>
         </div>
     </form>
@@ -41,7 +40,28 @@
 
 <script>
 export default {
-    name: "CreateProjectModal"
+    name: "CreateProjectModal",
+    data() {
+        return {
+            project: {
+                name: '',
+                prefix: ''
+            }
+        }
+    },
+    methods: {
+        createProject() {
+            axios.post('/pro', this.project)
+                .then(response => {
+                    this.$emit('close')
+                    this.$emit('created', response.data)
+                    // console.log(response.data)
+                })
+                .catch(error => {
+                    console.log(error.response.data)
+                })
+        }
+    }
 }
 </script>
 
