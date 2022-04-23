@@ -24,6 +24,7 @@ class ProjectController extends Controller
                 'token' => $project->token,
                 'prefix' => $project->prefix,
                 'url' => 'http://' . $project->token . '.mockapi.uz/' . $project->prefix . '/:resource',
+                'url_display' => 'http://' . $project->token . '.mockapi.uz/' . $project->prefix . '/<span style="opacity: 0.7">:resource</span>',
                 'resources' => $project->resources,
             ];
         return response()->json($project);

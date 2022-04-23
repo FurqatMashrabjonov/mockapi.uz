@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\FieldController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +49,27 @@ Route::controller(ResourceController::class)
         Route::delete('/{resource}', 'destroy');
     });
 
+
+Route::controller(FieldController::class)
+    ->middleware('auth')->prefix('/fields')
+    ->group(function () {
+        Route::get('/', 'get');
+        Route::get('/{field}', 'getSingle');
+        Route::post('/', 'store');
+        Route::post('/{field}', 'update');
+        Route::delete('/{field}', 'destroy');
+    });
+
+
+Route::controller(TypeController::class)
+    ->middleware('auth')->prefix('types')
+    ->group(function () {
+        Route::get('/', 'get');
+        Route::get('/{field}', 'getSingle');
+        Route::post('/', 'store');
+        Route::post('/{field}', 'update');
+        Route::delete('/{field}', 'destroy');
+    });
 
 //----------------------------------------------------------[
 

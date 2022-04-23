@@ -7,9 +7,32 @@
                     <div class="card-header bg-light flex-column">
                         <span class="is-large" style="font-weight: bold">Api url</span>
 
-                        <h4 class="text-dark" style="font-size: 14px">{{ project.url }}</h4>
+                        <h4 class="text-dark" style="font-size: 14px" v-html="project.url_display"></h4>
                     </div>
                     <div class="card-body" style="text-align: center">
+                        <section>
+                            <b-button
+                                label="+Resurs yaratish"
+                                type="is-primary"
+                                size="is-small"
+                                @click="isComponentModalActive = true"/>
+
+                            <b-modal
+                                v-model="isComponentModalActive"
+                                has-modal-card
+                                trap-focus
+                                :destroy-on-hide="false"
+                                aria-role="dialog"
+                                aria-label="Create Project Modal"
+                                close-button-aria-label="Close"
+                                aria-modal>
+                                <template #default="props">
+                                    <CreateResourceModal v-bind="formProps"
+                                                          @close="props.close"></CreateResourceModal>
+                                </template>
+                            </b-modal>
+                        </section>
+                        <br>
                        <span class="is-medium" v-if="project.resources.length === 0">Resurslar mavjud emas</span>
                         <div v-else>sada</div>
                     </div>
@@ -20,11 +43,18 @@
 </template>
 
 <script>
+
+import CreateResourceModal from "./CreateResourceModal";
 export default {
     name: "ProjectSingle",
+    components: {
+      CreateResourceModal
+    },
     data() {
         return {
-            project: Object
+            project: Object,
+            isComponentModalActive : false,
+            formProps: {}
         }
     },
     created() {
@@ -39,6 +69,9 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
+        },
+        createResourceModal(){
+
         }
     }
 }
