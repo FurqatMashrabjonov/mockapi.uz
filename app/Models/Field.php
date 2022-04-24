@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Field extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'resource_id', 'type_id'];
 }

@@ -5499,21 +5499,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CreateProjectModal",
+  props: ['project'],
   data: function data() {
     return {
       resource: {
         name: '',
         fields: [{
           'name': 'id',
-          'type_id': 0
+          'type_id': 2
         }, {
           'name': 'created_at',
-          'type_id': 0
+          'type_id': 3
         }, {
           'name': 'name',
-          'type_id': 0
+          'type_id': 1
         }]
       },
       types: []
@@ -5523,6 +5533,15 @@ __webpack_require__.r(__webpack_exports__);
     this.getTypes();
   },
   methods: {
+    addField: function addField() {
+      this.resource.fields.push({
+        'name': '',
+        'type_id': 2
+      });
+    },
+    deleteField: function deleteField(index) {
+      this.resource.fields.splice(index, 1);
+    },
     getTypes: function getTypes() {
       var _this = this;
 
@@ -5535,7 +5554,8 @@ __webpack_require__.r(__webpack_exports__);
     createProject: function createProject() {
       var _this2 = this;
 
-      axios.post('/pro', this.project).then(function (response) {
+      this.resource.project_id = this.project.id;
+      axios.post('/resources', this.resource).then(function (response) {
         _this2.$emit('close');
 
         _this2.$emit('created', response.data); // console.log(response.data)
@@ -5639,6 +5659,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ProjectSingle",
@@ -5656,6 +5688,10 @@ __webpack_require__.r(__webpack_exports__);
     this.getProject();
   },
   methods: {
+    resourceCreated: function resourceCreated(resource) {
+      this.project.resources.push(resource);
+      console.log(resource);
+    },
     getProject: function getProject() {
       var _this = this;
 
@@ -49827,8 +49863,20 @@ var render = function () {
                           _vm._l(_vm.types, function (type) {
                             return _c(
                               "option",
-                              { key: type.id, domProps: { value: type.id } },
-                              [_vm._v(_vm._s(type.name))]
+                              {
+                                key: type.id,
+                                domProps: {
+                                  selected:
+                                    _vm.resource.fields[index] === type.id,
+                                  value: type.id,
+                                },
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(type.name) +
+                                    "\n                            "
+                                ),
+                              ]
                             )
                           }),
                           0
@@ -49840,12 +49888,45 @@ var render = function () {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-2 is-rounded bg-danger" }, [
-                  _vm._v("\n                    X\n                "),
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "col-2" },
+                  [
+                    _c("box-icon", {
+                      staticStyle: { cursor: "pointer" },
+                      attrs: {
+                        name: "x-circle",
+                        type: "solid",
+                        color: "#3e44d6",
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.deleteField(index)
+                        },
+                      },
+                    }),
+                  ],
+                  1
+                ),
               ]
             )
           }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "float-start" },
+            [
+              _c(
+                "b-button",
+                {
+                  attrs: { type: "button", color: "primary", size: "sm" },
+                  on: { click: _vm.addField },
+                },
+                [_vm._v("\n                    +add field\n                ")]
+              ),
+            ],
+            1
+          ),
         ],
         2
       ),
@@ -49945,9 +50026,9 @@ var render = function () {
             attrs: { name: "right-arrow-alt", color: "rgba( 14, 23, 232, 1 )" },
           }),
           _vm._v(
-            " " +
+            "\n            " +
               _vm._s(_vm.project.name) +
-              "  this will be actions\n            "
+              " this will be actions\n            "
           ),
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header bg-light flex-column" }, [
@@ -50008,7 +50089,13 @@ var render = function () {
                               _c(
                                 "CreateResourceModal",
                                 _vm._b(
-                                  { on: { close: props.close } },
+                                  {
+                                    attrs: { project: _vm.project },
+                                    on: {
+                                      created: _vm.resourceCreated,
+                                      close: props.close,
+                                    },
+                                  },
                                   "CreateResourceModal",
                                   _vm.formProps,
                                   false
@@ -50036,7 +50123,28 @@ var render = function () {
                   ? _c("span", { staticClass: "is-medium" }, [
                       _vm._v("Resurslar mavjud emas"),
                     ])
-                  : _c("div", [_vm._v("sada")]),
+                  : _c(
+                      "div",
+                      { staticClass: "flex" },
+                      _vm._l(_vm.project.resources, function (resource) {
+                        return _c(
+                          "div",
+                          {
+                            key: resource.id,
+                            staticClass: "p-2 m-2 rounded float-start bg-gray",
+                            staticStyle: { cursor: "pointer" },
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(resource.name) +
+                                "\n                        "
+                            ),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
               ]
             ),
           ]),

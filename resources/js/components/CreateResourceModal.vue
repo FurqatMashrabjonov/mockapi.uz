@@ -22,20 +22,29 @@
                 <h3 style="float: left">Sxema</h3>
                 <br>
 
-                <div v-for="(field, index) in resource.fields" :key="index"  class="row rounded m-2 p-2">
+                <div v-for="(field, index) in resource.fields" :key="index" class="row rounded m-2 p-2">
                     <div class="col-5">
                         <b-input type="text" rounded v-model="resource.fields[index].name"></b-input>
                     </div>
                     <div class="col-5">
                         <b-field>
                             <b-select v-model="resource.fields[index].type_id" placeholder="Tanlang" rounded>
-                                <option v-for="type in types" :key="type.id" :value="type.id">{{type.name}}</option>
+                                <option v-for="type in types" :key="type.id"
+                                        :selected="resource.fields[index] === type.id" :value="type.id">{{ type.name }}
+                                </option>
                             </b-select>
                         </b-field>
                     </div>
-                    <div class="col-2 is-rounded bg-danger">
-                        X
+                    <div class="col-2">
+                        <box-icon name='x-circle' style="cursor: pointer;" type='solid' color='#3e44d6'
+                                  @click="deleteField(index)"></box-icon>
                     </div>
+                </div>
+
+                <div class="float-start">
+                    <b-button type="button" @click="addField" color="primary" size="sm">
+                        +add field
+                    </b-button>
                 </div>
 
             </section>
@@ -53,6 +62,7 @@
 <script>
 export default {
     name: "CreateProjectModal",
+    props: ['project'],
     data() {
         return {
             resource: {
@@ -60,15 +70,15 @@ export default {
                 fields: [
                     {
                         'name': 'id',
-                        'type_id': 0,
+                        'type_id': 2,
                     },
                     {
                         'name': 'created_at',
-                        'type_id': 0
+                        'type_id': 3
                     },
                     {
                         'name': 'name',
-                        'type_id': 0
+                        'type_id': 1
                     }
                 ]
             },
@@ -79,6 +89,15 @@ export default {
         this.getTypes();
     },
     methods: {
+        addField() {
+            this.resource.fields.push({
+                'name': '',
+                'type_id': 2
+            });
+        },
+        deleteField(index) {
+            this.resource.fields.splice(index, 1);
+        },
         getTypes() {
             axios.get('/types')
                 .then(response => {
@@ -89,7 +108,8 @@ export default {
                 });
         },
         createProject() {
-            axios.post('/pro', this.project)
+            this.resource.project_id = this.project.id;
+            axios.post('/resources', this.resource)
                 .then(response => {
                     this.$emit('close')
                     this.$emit('created', response.data)

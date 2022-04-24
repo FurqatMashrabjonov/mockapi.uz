@@ -19,5 +19,10 @@ class Resource extends Model
         return $this->hasOne(Data::class);
     }
 
+    public function fields()
+    {
+        return $this->hasMany(Field::class);
+    }
+
 }
 

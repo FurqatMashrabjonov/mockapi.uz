@@ -40,7 +40,7 @@ Route::controller(ProjectController::class)
 
 
 Route::controller(ResourceController::class)
-    ->middleware('auth')->prefix('/resources')
+    ->middleware('auth')->prefix('resources')
     ->group(function () {
         Route::get('/', 'get');
         Route::get('/{resource}', 'getSingle');
