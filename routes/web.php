@@ -92,3 +92,14 @@ Route::any('/{any}', function () {
         return view('welcome');
     }
 })->where('any', '.*');
+
+
+
+Route::get('/fields', function(){
+    $fields = \App\Models\Field::with(['type'])->get();
+    return \App\Helpers\FakeData::fillData($fields, 10);
+});
+
+Route::get('/data', function(){
+    return \App\Models\Field::with(['type'])->get();
+});
