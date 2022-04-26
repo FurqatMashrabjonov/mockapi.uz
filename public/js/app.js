@@ -5671,6 +5671,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ProjectSingle",
@@ -50133,6 +50134,11 @@ var render = function () {
                             key: resource.id,
                             staticClass: "p-2 m-2 rounded float-start bg-gray",
                             staticStyle: { cursor: "pointer" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.singleResource(resource.id)
+                              },
+                            },
                           },
                           [
                             _vm._v(

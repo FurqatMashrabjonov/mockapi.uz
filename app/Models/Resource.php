@@ -19,6 +19,14 @@ class Resource extends Model
         return $this->hasOne(Data::class);
     }
 
+    public function data()
+    {
+        return $this->hasOne(Data::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function fields()
     {
         return $this->hasMany(Field::class);

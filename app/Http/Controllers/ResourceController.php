@@ -24,6 +24,5 @@ class ResourceController extends Controller
         }
 
         return response()->json($resource->load('fields'));
-
     }
 }

@@ -41,6 +41,7 @@
                         <span class="is-medium" v-if="project.resources.length === 0">Resurslar mavjud emas</span>
                         <div class="flex" v-else>
                             <div v-for="resource in project.resources"
+                                 @click="singleResource(resource.id)"
                                  class="p-2 m-2 rounded float-start bg-gray"
                                  style="cursor: pointer;"
                                  :key="resource.id">

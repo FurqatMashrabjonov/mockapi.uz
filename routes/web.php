@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ResourceController;
@@ -70,6 +71,17 @@ Route::controller(TypeController::class)
         Route::post('/{field}', 'update');
         Route::delete('/{field}', 'destroy');
     });
+
+Route::controller(DataController::class)
+    ->middleware('auth')->prefix('data')
+    ->group(function () {
+        Route::get('/', 'get');
+        Route::get('/{id}', 'getSingle');
+        Route::post('/', 'store');
+        Route::post('/{id}', 'update');
+        Route::delete('/{id}', 'destroy');
+    });
+
 
 //----------------------------------------------------------[
 
