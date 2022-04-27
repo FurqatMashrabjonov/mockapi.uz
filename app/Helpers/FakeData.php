@@ -28,16 +28,21 @@ class FakeData
     {
         $data = [];
         $faker = Factory::create();
-        foreach ($fields as $field) {
+        $i = $count;
+
+        while ($i-=1 != 0){
+            foreach ($fields as $field) {
 //             array_merge(static::fillOneData($field), $data);
-            $data[$field->name] = match ($field->type->faker) {
-                'text' => $faker->name,
-                'randomDigit' => rand(0, 1000),
-                'boolean' => rand(0, 5) % 2 == 0,
-                'date' => Carbon::now()->toDateTimeString(),
-                'randomElements', 'randomElement' => $faker->randomElements(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], rand(1, 10)),
-            };
+                $data[$field->name] = match ($field->type->faker) {
+                    'text' => $faker->name,
+                    'randomDigit' => rand(0, 1000),
+                    'boolean' => rand(0, 5) % 2 == 0,
+                    'date' => Carbon::now()->toDateTimeString(),
+                    'randomElements', 'randomElement' => $faker->randomElements(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], rand(1, 10)),
+                };
+            }
         }
+
         return $data;
     }
 

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//nimadur ozgardi
 Route::get('/', function () {
     return view('welcome');
 });
@@ -97,7 +97,7 @@ Route::any('/{any}', function () {
 
 Route::get('/fields', function(){
     $fields = \App\Models\Field::with(['type'])->get();
-    return \App\Helpers\FakeData::fillData($fields, 10);
+    return \App\Helpers\FakeData::fillData($fields, 100);
 });
 
 Route::get('/data', function(){
